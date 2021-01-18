@@ -17,24 +17,24 @@ response = requests.get("https://api.openweathermap.org/data/2.5/weather",
 soup = BeautifulSoup(response.content, 'xml')
 keyboard1 = telebot.types.ReplyKeyboardMarkup()
 keyboard1.row('Узнать погоду')
-
+end_temp_text = ' градусов целсия'
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    bot.send_message(message.chat.id, soup.temperature['value'] + ' градусов целсия')
+    bot.send_message(message.chat.id, soup.temperature['value'] + end_temp_text)
     bot.send_message(message.chat.id, soup.weather['value'])
 
 
 @bot.message_handler(commands=['weather'])
 def weather(message):
-    bot.send_message(message.chat.id, soup.temperature['value'] + ' градусов целсия')
+    bot.send_message(message.chat.id, soup.temperature['value'] + end_temp_text)
     bot.send_message(message.chat.id, soup.weather['value'])
 
 
 @bot.message_handler(content_types=['text'])
 def handle(message):
     if message.text == "Погода":
-        bot.send_message(message.chat.id, soup.temperature['value'] + ' градусов целсия')
+        bot.send_message(message.chat.id, soup.temperature['value'] + end_temp_text)
         bot.send_message(message.chat.id, soup.weather['value'])
 
 bot.polling(none_stop=True)
